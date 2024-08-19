@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Protectors</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #passwordStrength {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Password Protectors</h1>
+        <nav>
+            <a href="educational.html">Educational Content</a>
+            <a href="resources.html">Parent/Teacher Resources</a>
+        </nav>
+        <h2>Password Creation Challenge</h2>
+        <form>
+            <label for="password">Password: </label>
+            <input type="password" id="password" oninput="validatePasswordStrength()" placeholder="Enter password">
+            <p id="passwordStrength"></p>
+        </form>
+        <script>
+            function validatePasswordStrength() {
+                const password = document.getElementById("password").value;
+                const strengthText = document.getElementById("passwordStrength");
+    
+                // Criteria for password validation
+                const regexes = {
+                    length: /.{8,}/,                    // At least 8 characters
+                    lowercase: /[a-z]/,                 // At least one lowercase letter
+                    uppercase: /[A-Z]/,                 // At least one uppercase letter
+                    number: /[0-9]/,                    // At least one number
+                    specialChar: /[!@#\$%\^&\*]/        // At least one special character
+                };
+    
+                let strength = 0;
+                if (regexes.length.test(password)) strength++;
+                if (regexes.lowercase.test(password)) strength++;
+                if (regexes.uppercase.test(password)) strength++;
+                if (regexes.number.test(password)) strength++;
+                if (regexes.specialChar.test(password)) strength++;
+    
+                // Determine password strength level
+                let strengthMessage = "";
+                switch (strength) {
+                    case 1:
+                    case 2:
+                        strengthMessage = "Weak";
+                        strengthText.style.color = "red";
+                        break;
+                    case 3:
+                        strengthMessage = "Moderate";
+                        strengthText.style.color = "orange";
+                        break;
+                    case 4:
+                        strengthMessage = "Strong";
+                        strengthText.style.color = "blue";
+                        break;
+                    case 5:
+                        strengthMessage = "Very Strong";
+                        strengthText.style.color = "green";
+                        break;
+                    default:
+                        strengthMessage = "";
+                }
+    
+                strengthText.textContent = strengthMessage;
+            }
+        </script>
+</body>
+</html>
